@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Date: Tue, 03 Nov 2015 05:57:33 GMT
+Content-Length: 809
+Etag: "729b6b75027bf26639faad6aacb8767bc3225020"
+Content-Type: text/html; charset=UTF-8
+Server: TornadoServer/4.2.1
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Burt&#39;s Books | Home</title>
+<link rel="stylesheet" href="/static/css/style.css?v=1ed3cda3a496256b9a3aeb518bda8a37" />
+</head>
+<body>
+<p></p>
+<p>这里是从main.sh继承过来打标签哦！</p>
+<div id="container">
+<header>
+
+<h1>Welcome to Burt&#39;s Books!</h1>
+
+</header>
+<div id="main">
+<div id="content">
+
+<div id="hello">
+<p>Welcome to Burt's Books!</p>
+<p>Here is a Page</p>
+<a href="/discussion">To The Discussion</a>
+<p></p>
+<a href="/recommended">To The Recommended</a>
+</div>
+
+</div>
+</div>
+<footer>
+
+<p>
+For more information about our selection, hours or events, please email us at
+<a href="mailto:353566165@qq.com">353566165@qq.com</a>
+</p>
+
+</footer>
+</div>
+<script src="/static/js/script.js?v=d41d8cd98f00b204e9800998ecf8427e"></script>
+</body>
+</html>
