@@ -1,67 +1,53 @@
 #-*- coding: utf-8 -*-
 #A python program for motoring the service quality
-
-import os,sys
-import time
-import pycurl
-
-URL=""	#ÉèÖÃURL
-c = pycurl.Curl() #´´½¨CURL¶ÔÏó
-c.setopt(pycurl.URL, URL) #¶¨ÒåÇëÇóµÄurl
-c.setopt(pycurl.CONNECTTIMEOUT, 5) #Á¬½Ó³¬Ê±Ê±¼ä
-c.setopt(pycurl.TIMEOUT, 5) #ÇëÇó³¬Ê±Ê±¼ä
-c.setopt(pycurl.NOPROGRESS, 1) #¹Ø±ÕÏÂÔØ½ø¶ÈÌõ
-c.setopt(pycurl.FORBID_REUSE, 1) #Íê³É½»»¥ºóÇ¿ÖÆ¶Ï¿ª£¬²»¸´ÓÃ
-c.setopt(pycurl.MAXREDIRS, 1) #Ö¸¶¨HTTPÖØ¶¨ÏòµÄ×î´óÊý
-c.setopt(pycurl.DNS_CACHE_TIMEOUT,30) #ÉèÖÃ±£´æDNSÐÅÏ¢µÄÊ±¼äÎª30s# -*- coding: utf-8 -*-  
+ 
 import os,sys  
 import time  
 import sys  
 import pycurl  
  
-URL="http://yangfuliu.website:8888"    #Ì½²âµÄÄ¿±êURL  
-c = pycurl.Curl()    #´´½¨Ò»¸öCurl¶ÔÏó  
-c.setopt(pycurl.URL, URL)    #¶¨ÒåÇëÇóµÄURL³£Á¿  
-c.setopt(pycurl.CONNECTTIMEOUT, 5)    #¶¨ÒåÇëÇóÁ¬½ÓµÄµÈ´ýÊ±¼ä  
-c.setopt(pycurl.TIMEOUT, 5)    #¶¨ÒåÇëÇó³¬Ê±Ê±¼ä  
-c.setopt(pycurl.NOPROGRESS, 1)    #ÆÁ±ÎÏÂÔØ½ø¶ÈÌõ  
-c.setopt(pycurl.FORBID_REUSE, 1)    #Íê³É½»»¥ºóÇ¿ÖÆ¶Ï¿ªÁ¬½Ó£¬²»ÖØÓÃ  
-c.setopt(pycurl.MAXREDIRS, 1)    #Ö¸¶¨HTTPÖØ¶¨ÏòµÄ×î´óÊýÎª1  
-c.setopt(pycurl.DNS_CACHE_TIMEOUT,30)    #ÉèÖÃ±£´æDNSÐÅÏ¢µÄÊ±¼äÎª30Ãë  
-#´´½¨Ò»¸öÎÄ¼þ¶ÔÏó£¬ÒÔ¡±wb¡±·½Ê½´ò¿ª£¬ÓÃÀ´´æ´¢·µ»ØµÄhttpÍ·²¿¼°Ò³ÃæÄÚÈÝ  
+URL="http://yangfuliu.website:8888"    #æŽ¢æµ‹çš„ç›®æ ‡URL  
+c = pycurl.Curl()    #åˆ›å»ºä¸€ä¸ªCurlå¯¹è±¡  
+c.setopt(pycurl.URL, URL)    #å®šä¹‰è¯·æ±‚çš„URLå¸¸é‡  
+c.setopt(pycurl.CONNECTTIMEOUT, 5)    #å®šä¹‰è¯·æ±‚è¿žæŽ¥çš„ç­‰å¾…æ—¶é—´  
+c.setopt(pycurl.TIMEOUT, 5)    #å®šä¹‰è¯·æ±‚è¶…æ—¶æ—¶é—´  
+c.setopt(pycurl.NOPROGRESS, 1)    #å±è”½ä¸‹è½½è¿›åº¦æ¡  
+c.setopt(pycurl.FORBID_REUSE, 1)    #å®Œæˆäº¤äº’åŽå¼ºåˆ¶æ–­å¼€è¿žæŽ¥ï¼Œä¸é‡ç”¨  
+c.setopt(pycurl.MAXREDIRS, 1)    #æŒ‡å®šHTTPé‡å®šå‘çš„æœ€å¤§æ•°ä¸º1  
+c.setopt(pycurl.DNS_CACHE_TIMEOUT,30)    #è®¾ç½®ä¿å­˜DNSä¿¡æ¯çš„æ—¶é—´ä¸º30ç§’  
+#åˆ›å»ºä¸€ä¸ªæ–‡ä»¶å¯¹è±¡ï¼Œä»¥â€wbâ€æ–¹å¼æ‰“å¼€ï¼Œç”¨æ¥å­˜å‚¨è¿”å›žçš„httpå¤´éƒ¨åŠé¡µé¢å†…å®¹  
 indexfile = open(os.path.dirname(os.path.realpath(__file__))+"/content.txt", "wb")  
-c.setopt(pycurl.WRITEHEADER, indexfile)    #½«·µ»ØµÄHTTP HEADER¶¨Ïòµ½indexfileÎÄ¼þ¶ÔÏó  
-c.setopt(pycurl.WRITEDATA, indexfile)    #½«·µ»ØµÄHTMLÄÚÈÝ¶¨Ïòµ½indexfileÎÄ¼þ¶ÔÏó  
-try:  
-    c.perform()    #Ìá½»ÇëÇó  
-except Exception,e:  
-    print "connecion error:"+str(e)  
-    indexfile.close()  
-    c.close()  
-sys.exit()  
+c.setopt(pycurl.WRITEHEADER, indexfile)    #å°†è¿”å›žçš„HTTP HEADERå®šå‘åˆ°indexfileæ–‡ä»¶å¯¹è±¡  
+c.setopt(pycurl.WRITEDATA, indexfile)    #å°†è¿”å›žçš„HTMLå†…å®¹å®šå‘åˆ°indexfileæ–‡ä»¶å¯¹è±¡  
+try:
+	c.perform()    #æäº¤è¯·æ±‚  
+except Exception,e:
+	print "connecion error:"+str(e)
+	indexfile.close()
+	c.close()
+	sys.exit()  
  
-NAMELOOKUP_TIME =  c.getinfo(c.NAMELOOKUP_TIME)    #»ñÈ¡DNS½âÎöÊ±¼ä  
-CONNECT_TIME =  c.getinfo(c.CONNECT_TIME)    #»ñÈ¡½¨Á¢Á¬½ÓÊ±¼ä  
-PRETRANSFER_TIME =   c.getinfo(c.PRETRANSFER_TIME)    #»ñÈ¡´Ó½¨Á¢Á¬½Óµ½×¼±¸´«ÊäËùÏû  
-                                                      #ºÄµÄÊ±¼ä  
-STARTTRANSFER_TIME = c.getinfo(c.STARTTRANSFER_TIME)    #»ñÈ¡´Ó½¨Á¢Á¬½Óµ½´«Êä¿ªÊ¼Ïû  
-                                                        #ºÄµÄÊ±¼ä  
-TOTAL_TIME = c.getinfo(c.TOTAL_TIME)    #»ñÈ¡´«ÊäµÄ×ÜÊ±¼ä  
-HTTP_CODE =  c.getinfo(c.HTTP_CODE)    #»ñÈ¡HTTP×´Ì¬Âë  
-SIZE_DOWNLOAD =  c.getinfo(c.SIZE_DOWNLOAD)    #»ñÈ¡ÏÂÔØÊý¾Ý°ü´óÐ¡  
-HEADER_SIZE = c.getinfo(c.HEADER_SIZE)    #»ñÈ¡HTTPÍ·²¿´óÐ¡  
-SPEED_DOWNLOAD=c.getinfo(c.SPEED_DOWNLOAD)    #»ñÈ¡Æ½¾ùÏÂÔØËÙ¶È  
-#´òÓ¡Êä³öÏà¹ØÊý¾Ý  
-print "HTTP×´Ì¬Âë£º%s" %(HTTP_CODE)  
-print "DNS½âÎöÊ±¼ä£º%.2f ms"%(NAMELOOKUP_TIME*1000)  
-print "½¨Á¢Á¬½ÓÊ±¼ä£º%.2f ms" %(CONNECT_TIME*1000)  
-print "×¼±¸´«ÊäÊ±¼ä£º%.2f ms" %(PRETRANSFER_TIME*1000)  
-print "´«Êä¿ªÊ¼Ê±¼ä£º%.2f ms" %(STARTTRANSFER_TIME*1000)  
-print "´«Êä½áÊø×ÜÊ±¼ä£º%.2f ms" %(TOTAL_TIME*1000)  
-print "ÏÂÔØÊý¾Ý°ü´óÐ¡£º%d bytes/s" %(SIZE_DOWNLOAD)  
-print "HTTPÍ·²¿´óÐ¡£º%d byte" %(HEADER_SIZE)  
-print "Æ½¾ùÏÂÔØËÙ¶È£º%d bytes/s" %(SPEED_DOWNLOAD)  
-#¹Ø±ÕÎÄ¼þ¼°Curl¶ÔÏó  
+NAMELOOKUP_TIME =  c.getinfo(c.NAMELOOKUP_TIME)    #èŽ·å–DNSè§£æžæ—¶é—´  
+CONNECT_TIME =  c.getinfo(c.CONNECT_TIME)    #èŽ·å–å»ºç«‹è¿žæŽ¥æ—¶é—´  
+PRETRANSFER_TIME =   c.getinfo(c.PRETRANSFER_TIME)    #èŽ·å–ä»Žå»ºç«‹è¿žæŽ¥åˆ°å‡†å¤‡ä¼ è¾“æ‰€æ¶ˆ  
+                                                      #è€—çš„æ—¶é—´  
+STARTTRANSFER_TIME = c.getinfo(c.STARTTRANSFER_TIME)    #èŽ·å–ä»Žå»ºç«‹è¿žæŽ¥åˆ°ä¼ è¾“å¼€å§‹æ¶ˆ  
+                                                        #è€—çš„æ—¶é—´  
+TOTAL_TIME = c.getinfo(c.TOTAL_TIME)    #èŽ·å–ä¼ è¾“çš„æ€»æ—¶é—´  
+HTTP_CODE =  c.getinfo(c.HTTP_CODE)    #èŽ·å–HTTPçŠ¶æ€ç   
+SIZE_DOWNLOAD =  c.getinfo(c.SIZE_DOWNLOAD)    #èŽ·å–ä¸‹è½½æ•°æ®åŒ…å¤§å°  
+HEADER_SIZE = c.getinfo(c.HEADER_SIZE)    #èŽ·å–HTTPå¤´éƒ¨å¤§å°  
+SPEED_DOWNLOAD=c.getinfo(c.SPEED_DOWNLOAD)    #èŽ·å–å¹³å‡ä¸‹è½½é€Ÿåº¦  
+#æ‰“å°è¾“å‡ºç›¸å…³æ•°æ®  
+print "HTTPçŠ¶æ€ç ï¼š%s" %(HTTP_CODE)  
+print "DNSè§£æžæ—¶é—´ï¼š%.2f ms"%(NAMELOOKUP_TIME*1000)  
+print "å»ºç«‹è¿žæŽ¥æ—¶é—´ï¼š%.2f ms" %(CONNECT_TIME*1000)  
+print "å‡†å¤‡ä¼ è¾“æ—¶é—´ï¼š%.2f ms" %(PRETRANSFER_TIME*1000)  
+print "ä¼ è¾“å¼€å§‹æ—¶é—´ï¼š%.2f ms" %(STARTTRANSFER_TIME*1000)  
+print "ä¼ è¾“ç»“æŸæ€»æ—¶é—´ï¼š%.2f ms" %(TOTAL_TIME*1000)  
+print "ä¸‹è½½æ•°æ®åŒ…å¤§å°ï¼š%d bytes/s" %(SIZE_DOWNLOAD)  
+print "HTTPå¤´éƒ¨å¤§å°ï¼š%d byte" %(HEADER_SIZE)  
+print "å¹³å‡ä¸‹è½½é€Ÿåº¦ï¼š%d bytes/s" %(SPEED_DOWNLOAD)  
+#å…³é—­æ–‡ä»¶åŠCurlå¯¹è±¡  
 indexfile.close()  
-c.close() 
-
+c.close()
