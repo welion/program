@@ -1,3 +1,4 @@
+#-*-coding : utf-8 -*-
 #!/usr/bin/env python
 import os.path
 
@@ -8,8 +9,49 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 from tornado.options import define, options
+import pycurl
+import os,sys
 
 define("port", default=8000, help="run on the given port...", type=int)
+
+
+
+def GetSiteStat(URL):
+        c = pycurl.Curl()
+        c.setopt(pycurl.URL, URL)
+        c.setopt(pycurl.CONNECTTIMEOUT, 5)
+        c.setopt(pycurl.TIMEOUT, 5)
+        c.setopt(pycurl.NOPROGRESS, 1)    
+        c.setopt(pycurl.FORBID_REUSE, 1) 
+        c.setopt(pycurl.MAXREDIRS, 1)   
+        c.setopt(pycurl.DNS_CACHE_TIMEOUT,30) 
+        indexfile = open(os.path.dirname(os.path.realpath(__file__))+"/content.txt", "wb")  
+        c.setopt(pycurl.WRITEHEADER, indexfile)  
+        c.setopt(pycurl.WRITEDATA, indexfile)   
+        try:
+                c.perform()   
+        except Exception,e:
+                print "connecion error:"+str(e)
+                c.close()
+        NAMELOOKUP_TIME =  c.getinfo(c.NAMELOOKUP_TIME) 
+        CONNECT_TIME =  c.getinfo(c.CONNECT_TIME)    
+        PRETRANSFER_TIME =   c.getinfo(c.PRETRANSFER_TIME) 
+        STARTTRANSFER_TIME = c.getinfo(c.STARTTRANSFER_TIME)
+        TOTAL_TIME = c.getinfo(c.TOTAL_TIME)  
+        HTTP_CODE =  c.getinfo(c.HTTP_CODE)  
+        SIZE_DOWNLOAD =  c.getinfo(c.SIZE_DOWNLOAD) 
+        HEADER_SIZE = c.getinfo(c.HEADER_SIZE)   
+        SPEED_DOWNLOAD=c.getinfo(c.SPEED_DOWNLOAD)  
+
+        return {"HTTP_CODE":HTTP_CODE,
+                "NAMELOOKUP_TIME":NAMELOOKUP_TIME,
+                "CONNECT_TIME":CONNECT_TIME,
+                "PRETRANSFER_TIME":PRETRANSFER_TIME,
+                "STARTTRANSFER_TIME":STARTTRANSFER_TIME,
+                "TOTAL_TIME":TOTAL_TIME,
+                "SIZE_DOWNLOAD":SIZE_DOWNLOAD,
+                "HEADER_SIZE":HEADER_SIZE,
+                "SPEED_DOWNLOAD":SPEED_DOWNLOAD}
 
 class Application(tornado.web.Application):
 	def __init__(self):
@@ -17,6 +59,7 @@ class Application(tornado.web.Application):
 			(r"/",MainHandler),
 			(r"/recommended",RecommendedHandler),
 			(r"/discussion",DiscussionHandler),
+			(r"/monitor", MonitorHandler),
 		]
 		settings = dict(
 			template_path=os.path.join(os.path.dirname(__file__),"templates"),
@@ -33,6 +76,12 @@ class MainHandler(tornado.web.RequestHandler):
 			page_title = "Burt's Books | Home",
 			header_text = "Welcome to Burt's Books!",
 		)
+
+class MonitorHandler(tornado.web.RequestHandler):
+	def get(self):
+		SiteInfo = GetSiteStat("http://www.baidu.com")
+		self.render("monitor.html")
+
 
 class RecommendedHandler(tornado.web.RequestHandler):
 	def get(self):
@@ -56,7 +105,7 @@ class RecommendedHandler(tornado.web.RequestHandler):
 				"date_added":1311148056,
 				"date_released": "May 2007",
 				"isbn":"978-0-596-52926-0",
-				"description":"<p>You've built web sites that can be used by humans. But can you also build web sites that are usable by machines? That's where the future lies, and that's what this book shows you how to do. Today's web service technologies have lost sight of the simplicity that made the Web successful. This book explains how to put the &quot;Web&quot; back into web services with REST, the architectural style that drives the Web.</p>"
+
 			},
 			{
 				"title":"Head First Python",
