@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<title>Monitor Page</title>	
+	</head>
+	<body>
+		<p>HTTP状态码：{{ HTTP_CODE }}</p> 
+		<p>DNS解析时间：{{ NAMELOOKUP_TIME }} </p> 
+		<p>建立连接时间: {{ CONNECT_TIME }}</p>  
+		<p>准备传输时间：{{ PRETRANSFER_TIME }}</p>  
+		<p>传输开始时间：{{ STARTTRANSFER_TIME }}</p>  
+		<p>传输结束总时间：{{ TOTAL_TIME }}/p>  
+		<p>下载数据包大小: {{ SIZE_DOWNLOAD }}</p>
+		<p>HTTP头部大小：{{ HEADER_SIZE }} </p> 
+		<p>平均下载速度：{{ SPEED_DOWNLOAD }} </p>
+	</body>
+	
+</html>

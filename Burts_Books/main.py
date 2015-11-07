@@ -64,7 +64,9 @@ class Application(tornado.web.Application):
 		settings = dict(
 			template_path=os.path.join(os.path.dirname(__file__),"templates"),
 			static_path=os.path.join(os.path.dirname(__file__),"static"),
-			ui_modules={"Book" : BookModule},
+			ui_modules={"Book" : BookModule,
+				    "Info" : InfoModule,
+				},
 			debug = True,
 			)
 		tornado.web.Application.__init__(self,handlers,**settings)
@@ -80,7 +82,17 @@ class MainHandler(tornado.web.RequestHandler):
 class MonitorHandler(tornado.web.RequestHandler):
 	def get(self):
 		SiteInfo = GetSiteStat("http://www.baidu.com")
-		self.render("monitor.html")
+		information = {"HTTP_CODE":SiteInfo["HTTP_CODE"],
+				"NAMELOOKUP_TIME":SiteInfo["NAMELOOKUP_TIME"],
+				"CONNECT_TIME":SiteInfo["CONNECT_TIME"],
+				"PRETRANSFER_TIME":SiteInfo["PRETRANSFER_TIME"],
+				"STARTTRANSFER_TIME":SiteInfo["STARTTRANSFER_TIME"],
+				"TOTAL_TIME":SiteInfo["TOTAL_TIME"],
+				"SIZE_DOWNLOAD":SiteInfo["SIZE_DOWNLOAD"]
+				}
+		self.render("monitor.html",
+			Info = infomation,
+			)
 
 
 class RecommendedHandler(tornado.web.RequestHandler):
@@ -152,13 +164,20 @@ class BookModule(tornado.web.UIModule):
         def render(self,book):
                 return self.render_string(
                         "modules/book.html",
-                        book = book,
+                        book = book
                 )
         def css_file(self):
                 return "css/recommended.css"
 
         def javascript_file(self):
                 return "js/recommended.js"
+
+class InfoModule(tornado.web.UIModule):
+	def render(self,Info):
+		return self.render_string(
+			"module/Info.html",
+			Info = Info
+		)
 
 def main():
         tornado.options.parse_command_line()
