@@ -76,7 +76,7 @@ class MainHandler(tornado.web.RequestHandler):
 		self.render(
 			"index.html",
 			page_title = "Burt's Books | Home",
-			header_text = "Welcome to Burt's Books!",
+			header_text = "Welcome !YANG FU LIU !",
 		)
 
 class MonitorHandler(tornado.web.RequestHandler):
@@ -91,7 +91,7 @@ class MonitorHandler(tornado.web.RequestHandler):
 				"SIZE_DOWNLOAD":SiteInfo["SIZE_DOWNLOAD"]
 				}
 		self.render("monitor.html",
-			Info = infomation,
+			info = information,
 			)
 
 
@@ -173,10 +173,10 @@ class BookModule(tornado.web.UIModule):
                 return "js/recommended.js"
 
 class InfoModule(tornado.web.UIModule):
-	def render(self,Info):
+	def render(self,info):
 		return self.render_string(
-			"module/Info.html",
-			Info = Info
+			"modules/Info.html",
+			Info = info
 		)
 
 def main():
